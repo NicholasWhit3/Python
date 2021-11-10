@@ -7,30 +7,28 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class TestRequiredInputs(unittest.TestCase):
     def setUp(self):
-        self.browser = webdriver.Chrome()
+        self.driver = webdriver.Chrome()
 
     def tearDown(self):
-        self.browser.quit()
+        self.driver.quit()
 
     def get_registration_result(self, link):
-        self.browser.get(link)
+        self.driver.get(link)
 
-        # fill the erquired fields
-        first_required = self.browser.find_element(By.CSS_SELECTOR, "input.first[required]")
-        second_required = self.browser.find_element(By.CSS_SELECTOR, "input.second[required]")
-        third_required = self.browser.find_element(By.CSS_SELECTOR, "input.third[required]")
-        elements = [first_required, second_required, third_required]
-        for element in elements:
-            element.send_keys("some text")
-
+        # fill the required fields
+        list_of_required_fields = self.driver.find_elements(By.TAG_NAME, 'input')
+        for elem in list_of_required_fields:
+            if elem.get_attribute('required'):
+                elem.send_keys("some text")
+                
         # submit the form
-        button = self.browser.find_element(By.CSS_SELECTOR, "button.btn")
+        button = self.driver.find_element(By.CSS_SELECTOR, "button.btn")
         button.click()
-
         # wait for the page to render new element
-        welcome_text_elt = WebDriverWait(self.browser, 3).until(EC.presence_of_element_located((By.TAG_NAME, "h1")))
+        welcome_text_elt = WebDriverWait(self.driver, 3).until(EC.presence_of_element_located((By.TAG_NAME, "h1")))
         welcome_text = welcome_text_elt.text
         return welcome_text
+
 
     def test_registration1(self):
         link = "http://suninjuly.github.io/registration1.html"
