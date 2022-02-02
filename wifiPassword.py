@@ -4,7 +4,7 @@ import subprocess
 def extract_wifi_passwords():
     profiles_data = subprocess.check_output('netsh wlan show profiles').decode('utf-8').split('\n')
 
-    profilies = [i.split(':')[1].strip() for i in profiles_data if 'All user profile' in i]
+    profiles = [i.split(':')[1].strip() for i in profiles_data if 'All user Profile' in i]
 
     for profile in profilies:
         profile_info = subprocess.check_output(f'netsh wlan show profile {profile} key=clear').decode('utf-8').split('\n')
@@ -20,7 +20,11 @@ def extract_wifi_passwords():
             file.write(f'Profile: {profile}\nPassword: {password}\n{"#" * 20}')
 
 
-extract_wifi_passwords()
+def main():
+    extract_wifi_passwords()
+
+if __name__ == '__main__':
+    main()
 
 """
 use command
