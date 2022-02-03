@@ -33,7 +33,7 @@ def walking_by_dirs(dir, password):
                 decryption(path, password)
             except Exception as ex:
                 print(ex)
-            # if we find a directory, then repeat the cycle in search of files
+            # if we find a directory, then repeat the cycle in search of files 
         else:
             walking_by_dirs(path, password)
 
