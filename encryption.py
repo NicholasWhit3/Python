@@ -24,7 +24,7 @@ def encryption(file, password):
 
 # directory scanning function
 def walking_by_dirs(dir, password):
-    # iterate through all subdirectories in the specified directory
+    # iterate through all subdirectories in the specified directory 
     for name in os.listdir(dir):
         path = os.path.join(dir, name)
 
